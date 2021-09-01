@@ -1,24 +1,27 @@
-# hello-world
+# xml-loader
 
-## Project setup
-```
-yarn install
-```
+## 为什么需要 loader
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+webpack只能解析js和JSON文件，需要loader对于一些解析不了的文件进行转换。
 
-### Compiles and minifies for production
-```
-yarn build
-```
+## 定义一个loader
 
-### Lints and fixes files
-```
-yarn lint
-```
+见 src/loader/xml-loader
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## webpack配置
+
+    ```js
+    configureWebpack: {
+            resolveLoader: {
+            modules: ['node_modules', path.join(__dirname, 'src/loader')],
+            },
+        },
+    chainWebpack: config => {
+        config.module
+            .rule('xml')
+            .test(/\.xml$/)
+            .use('xml-loader')
+            .loader('xml-loader')
+            .end()
+    }
+    ```
